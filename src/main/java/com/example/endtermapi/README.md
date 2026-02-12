@@ -1,3 +1,60 @@
+    BONUS TASK:Caching Layer
+
+     Objective
+     Improve application performance by reducing unnecessary database calls using a simple in-memory caching mechanism.
+---
+    Implementation Details:
+
+    Implemented a simple in-memory cache using Map---(private final Map<String, List<Player>> cache = new ConcurrentHashMap<>();)
+    Cache is managed via a Singleton class (PlayerCache)
+
+    Cached the frequently used method:
+    getAll() (GET /players)
+
+    Cache is automatically invalidated after:
+    creating a player
+    updating a player
+    deleting a player
+
+    Cache logic is implemented inside the Service layer, preserving layered architecture
+---
+     How It Works:
+
+    On the first GET /players request:
+
+    Data is fetched from the database
+    Result is stored in the in-memory cache
+
+    On subsequent GET /players requests:
+
+    Data is returned directly from the cache
+    Database is not queried again
+
+    On POST / PUT / DELETE operations:
+
+    Cache is cleared automatically to prevent stale data
+---
+    Design Constraints Compliance
+
+    Cache stored in memory using Map
+    Only one cache instance exists (Singleton)
+    Cache does not break layered architecture
+    Cache follows SOLID principles
+    Controller layer is unaware of caching logic
+---
+    Benefits
+
+    Reduced database load
+    Faster response time for frequent requests
+    Clean and maintainable implementation
+---
+    Short Defense Explanation
+
+    I implemented a simple in-memory caching layer using a Singleton cache.
+    The cache stores frequently requested player data and is automatically invalidated after any data modification.
+
+---
+
 Endterm Project — Football Team Management REST API
 A. Project Overview
 
